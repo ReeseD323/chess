@@ -9,11 +9,15 @@ w= 'Write a Display class to handle your rendering logic. Your Display class sho
 w= 'set the instance variable @cursor to Cursor.new([0,0], board).'
 
 class Display
-  attr_accessor :cursor_pos , :toggle_pos
-  def initialize(board, cursor_pos)
+  attr_accessor :cursor_pos, :toggle_pos
+  def initialize(board, cursor_pos= [0,0])
     @board = board
     @cursor_pos = cursor_pos
     @toggle_pos
+  end
+
+  def cursor_pos=(input)
+    @cursor_pos= input
   end
 
   def build_grid
@@ -46,6 +50,7 @@ class Display
 
   def render(cursor_pos)
     system("clear")
+    puts
     puts "Play chess!"
     build_grid.each { |row| puts row.join }
   end

@@ -40,6 +40,7 @@ class Cursor
     @board = board
     @display= display
     @display.render(cursor_pos)
+    @selectedcoordinates= []
   end
 
   def get_input
@@ -98,27 +99,63 @@ class Cursor
     when :left
         update_pos(MOVES[:left])
     when :space
+        puts 'space deteced'
         display.toggle_pos= @cursor_pos
         display.render(@cursor_pos)
-        selected= 
-        return @cursor_pos
-    when :return
+        @selectedcoordinates.append @cursor_pos
+        print @selectedcoordinates
+        if @selectedcoordinates.length == 2
+          puts 'selected coordinates is the right length to trigger if statment'
+          start= @selectedcoordinates[0]
+          endpos= @selectedcoordinates[1]
+          print start,'   ', endpos
+          puts
+          @board.move_piece(start,endpos)
+          @selectedcoordinates= []
+          @display = Display.new(@board, @cursor_pos).render(@cursor_pos)
+          @board.prin
+        end
+        get_input
+    when :newline
+        puts 'return detected'
         display.toggle_pos= @cursor_pos
         display.render(@cursor_pos)
-        return cursor_pos
+        @selectedcoordinates.append @cursor_pos
+        print @selectedcoordinates
+        if @selectedcoordinates.length == 2
+          puts 'selected coordinates is the right length to trigger if statment'
+          start= @selectedcoordinates[0]
+          endpos= @selectedcoordinates[1]
+          @board.move_piece(start,endpos)
+          @selectedcoordinates= []
+          @display = Display.new(@board, @cursor_pos).render(@cursor_pos)
+          @board.prin
+        end
+        get_input
     end
   end
 
 
   def update_pos(diff)
-    row, column = cursor_pos[0], cursor_pos[1]
+    row, column = @cursor_pos[0], @cursor_pos[1]
     row += diff[0]
     column += diff[1]
     @cursor_pos = [row,column]
     print 'cursor position updated to: ', @cursor_pos
     puts
-    display.cursor_pos= @cursor_pos
-    display.render(@cursor_pos)
+    print @selectedcoordinates
+    puts
+    print 'cursor pos right before error = ',  @cursor_pos
+    puts
+    print 'display classs name '
+    puts
+    if @display.class.name== 'Array'
+      puts @display[0].class.name
+      print @display[0]
+      puts
+    end
+    @display.cursor_pos= (@cursor_pos)
+    @display.render(@cursor_pos)
     get_input
     
   end

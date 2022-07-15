@@ -123,14 +123,17 @@ class Board
             validcoordinate= true
         end
         if validcoordinate == true && nilcoordinate== false
+            print 'possible coordinates 0 is ', possiblecoordinates[0]
+            puts
             if possiblecoordinates.include?(endpos)
                 puts 'VALID MOVE SELECTED'
                 grid[endpos[0]][endpos[1]]= piece
                 @grid[start[0]][start[1]]= Nullpiece.new(nil,self,[start[0],start[1]])
-                self.prin
             else 
-                puts 'POSITION NOT A POSSIBLE MOVE FOR SELECTED PIECE: ', piece.class.name
+                print 'POSITION NOT A POSSIBLE MOVE FOR SELECTED PIECE: ', piece.class.name
+                puts
                 print possiblecoordinates
+                puts
              end
             
         else

@@ -298,6 +298,7 @@ end
 
 class Rook < Piece
     def possiblemoves
+        print slideablestraight
         return slideablestraight
     end
     def symbol
@@ -309,6 +310,7 @@ end
 
 class Bishop < Piece
     def possiblemoves
+        print slideablediag
         return slideablediag
     end
 
@@ -321,6 +323,7 @@ end
 
 class Knight < Piece
     def possiblemoves
+        print horsemovement
         return horsemovement
     end
 
@@ -333,6 +336,7 @@ end
 
 class Queen < Piece
     def possiblemoves
+
         return slideablediag.concot(slideablestriaght)
     end
 
@@ -344,6 +348,7 @@ end
 
 class King < Piece
     def possiblemoves
+        print kingmovement
         return kingmovement
     end
 
@@ -356,6 +361,7 @@ end
 
 class Pawn < Piece
     def possiblemoves
+        print 'possible moves: ' , pawnmovement
         return pawnmovement
     end
 
