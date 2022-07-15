@@ -43,6 +43,7 @@ class Board
         @grid.unshift(order)
         @grid.append(orderlast)
         @grid.delete_at(1)
+
     end
     def grid
         return @grid
@@ -139,15 +140,9 @@ class Board
 
 end
 
-test= Board.new
-test.prin
-
-testcoordinate= [5,0]
-testpiece= Piece.new('king', test,testcoordinate)
-
-test.move_piece([1,1],[2,1])
-
-
+board= Board.new
+rookie= board.grid[0][0]
+puts rookie.symbol
 
 
 

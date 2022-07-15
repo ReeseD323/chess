@@ -292,15 +292,17 @@ class Piece
         @color = color
         @board = board
         @pos = pos
-    end
-    def moves
-
+        @symbol
     end
 end
 
 class Rook < Piece
     def possiblemoves
         return slideablestraight
+    end
+    def symbol
+        return ' ♜ ' if self.color == 'black'
+        return ' ♖ ' if self.color == 'white'
     end
 end
 
@@ -309,12 +311,22 @@ class Bishop < Piece
     def possiblemoves
         return slideablediag
     end
+
+    def symbol
+        return ' ♝ ' if self.color == 'black'
+        return ' ♗ ' if self.color == 'white'
+    end
 end
 
 
 class Knight < Piece
     def possiblemoves
         return horsemovement
+    end
+
+    def symbol
+        return ' ♞ ' if self.color == 'black'
+        return ' ♘ ' if self.color == 'white'
     end
 end
 
@@ -323,17 +335,33 @@ class Queen < Piece
     def possiblemoves
         return slideablediag.concot(slideablestriaght)
     end
+
+    def symbol
+        return ' ♛ ' if self.color == 'black'
+        return ' ♕ ' if self.color == 'white'
+    end
 end
 
 class King < Piece
     def possiblemoves
         return kingmovement
     end
+
+    def symbol
+        return ' ♚ ' if self.color == 'black'
+        return ' ♔ ' if self.color == 'white'
+    end
+    
 end
 
 class Pawn < Piece
     def possiblemoves
         return pawnmovement
+    end
+
+    def symbol
+        return ' ♟ ' if self.color == 'black'
+        return ' ♙ ' if self.color == 'white'
     end
 end
 
@@ -342,6 +370,9 @@ class Nullpiece < Piece
         @symbol= nil 
         @board= board
         @pos= pos
+    end
+    def symbol
+        return '   '
     end
 end
 
