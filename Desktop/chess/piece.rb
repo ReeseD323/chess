@@ -1,3 +1,9 @@
+#all pieces moves well
+#attackable pieces needs a method
+#check for check needs a method
+#check for checkmate needs a method
+
+
 module Slide
     def generatePossibilities(spots, targetlist)
         upperrow= spots[0]
@@ -23,13 +29,15 @@ module Slide
     # steps[1] is how columns is incremented
 
     def collisioncheck(row,column)
-        if self.board.grid[row][column].class.name != 'Nullpiece'
+        puts 
+        if self.board.grid[row][column].class.name != 'Nullpiece' || nil 
             print 'COLLISION FOUND @ ', [row,column]
             puts ''
             return true
         end
         false
     end
+
     def extendrow (row,column, incrementer)
         puts 'extending row....'
         possiblemoves= []
@@ -175,39 +183,45 @@ module Slide
                 print [rowe,col]
                 puts
                 newcor= [rowe,col].select {|i| i > -1 && i < 8}
-                puts collisioncheck(rowe,col)
-                if collisioncheck(rowe,col) == false && newcor.length ==2
-                    possiblemoves.append [newcor[0],newcor[1]]
-                    puts''
+                puts newcor
+                puts 'collision check rowe col '
+                if newcor.length ==2
+                    if collisioncheck(rowe,col) == false
+                        possiblemoves.append [newcor[0],newcor[1]]
+                        puts''
+                    end
                 end
             end
         end
         columnpositions= [column+2,column-2]
-        rowpositions= [row+1,row-1]
-        rowpositions.each do |rowe|
-            columnpositions.each do |col|
-                print [rowe,col]
+        rowpositions2= [row+1,row-1]
+        rowpositions2.each do |rowes|
+            columnpositions.each do |cols|
+                print [rowes,cols]
                 puts
-                newcor= [rowe,col].select {|i| i > -1 && i < 8}
-                puts collisioncheck(rowe,col)
-                if collisioncheck(rowe,col) == false && newcor.length == 2
-                    possiblemoves.append [rowe,col]
-                    puts''
+                newcor= [rowes,cols].select {|i| i > -1 && i < 8}
+                if newcor.length == 2
+                    if collisioncheck(rowes,cols) == false
+                        possiblemoves.append [newcor[0],newcor[1]]
+                        puts''
+                    end
                 end
             end
         end
-        print possiblemoves
+        print 'horse possible moves: ', possiblemoves
         puts
         return possiblemoves
     end
 
     def pawnmovement
         coordinates= self.pos
+        puts 'coordinates below'
+        print coordinates
         color = self.color
         row= coordinates[0]
         column = coordinates[1]
-        increment= [-1,1]
         if color== 'black'
+            puts 'color registered as blackS'
             if row == 1
                 if collisioncheck(row+2,column) == false && collisioncheck(row+1,column) == false
                     return [[row+1,column],[row+2,column]]
@@ -215,10 +229,12 @@ module Slide
                     return [[row+1,column]]
                 end
             end
+            print row, column
             return [[row+1, column]] if collisioncheck(row+1,column) == false
         end
         if color== 'white'
-            if row == 1
+            puts 'color registed as white'
+            if row == 6
                 if collisioncheck(row-2,column) == false && collisioncheck(row-1,column) == false
                     return [[row-1,column],[row-2,column]]
                 else
@@ -287,7 +303,7 @@ end
 
 class Piece 
     include Slide
-    attr_reader :color,:board, :pos
+    attr_accessor :color,:board, :pos
     def initialize(color= nil, board, pos)
         @color = color
         @board = board
@@ -298,7 +314,7 @@ end
 
 class Rook < Piece
     def possiblemoves
-        print slideablestraight
+        print 'possible moves: ', slideablestraight
         return slideablestraight
     end
     def symbol
@@ -323,7 +339,7 @@ end
 
 class Knight < Piece
     def possiblemoves
-        print horsemovement
+        print 'possible moves: ' , horsemovement
         return horsemovement
     end
 
@@ -336,8 +352,8 @@ end
 
 class Queen < Piece
     def possiblemoves
-
-        return slideablediag.concot(slideablestriaght)
+        print 'possible moves for the queen: ', slideablediag.concat(slideablestraight)
+        return slideablediag.concat(slideablestraight)
     end
 
     def symbol
@@ -348,7 +364,7 @@ end
 
 class King < Piece
     def possiblemoves
-        print kingmovement
+        print 'possible moves for the king', kingmovement
         return kingmovement
     end
 
@@ -361,7 +377,7 @@ end
 
 class Pawn < Piece
     def possiblemoves
-        print 'possible moves: ' , pawnmovement
+        print 'possible moves for said pawn: ' , pawnmovement
         return pawnmovement
     end
 
@@ -379,6 +395,9 @@ class Nullpiece < Piece
     end
     def symbol
         return '   '
+    end
+    def possiblemoves
+        return 'im a null piece you dummy'
     end
 end
 

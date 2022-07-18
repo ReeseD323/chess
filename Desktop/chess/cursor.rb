@@ -1,4 +1,5 @@
 require "io/console"
+require 'pry'
 
 
 KEYMAP = {
@@ -100,8 +101,9 @@ class Cursor
         update_pos(MOVES[:left])
     when :space
         puts 'space deteced'
-        display.toggle_pos= @cursor_pos
-        display.render(@cursor_pos)
+        @display = Display.new(@board, @cursor_pos)
+        @display.toggle_pos= @cursor_pos
+        @display.render(@cursor_pos)
         @selectedcoordinates.append @cursor_pos
         print @selectedcoordinates
         if @selectedcoordinates.length == 2
@@ -154,7 +156,7 @@ class Cursor
       print @display[0]
       puts
     end
-    @display.cursor_pos= (@cursor_pos)
+    @display= Display.new(@board, @cursor_pos)
     @display.render(@cursor_pos)
     get_input
     

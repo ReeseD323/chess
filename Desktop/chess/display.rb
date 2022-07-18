@@ -3,6 +3,7 @@ puts 'display'
 require_relative 'board.rb'
 require 'colorize'
 require_relative 'cursor.rb'
+require 'pry'
 
 w= 'Write a Display class to handle your rendering logic. Your Display class should access the board.
  Require the colorize gem so you can render in color.'
